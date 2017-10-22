@@ -1,0 +1,9 @@
+.tit{width:100%; text-align: center;}
+.UserList{width: 60%;margin: auto auto;}
+.UserList .tit{background-color:#ccc; }
+.UserList a {cursor: pointer;}
+.addbox{width: 30%;margin: auto auto;}
+.addbox button{width: 90px;height: 30px;}
+.mid{ text-align: center}
+.editBox{ display: none;}
+.editBox table{margin: auto auto; padding: 20px;}
