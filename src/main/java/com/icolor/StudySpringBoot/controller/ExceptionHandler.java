@@ -1,12 +1,11 @@
 package com.icolor.StudySpringBoot.controller;
 
-import com.icolor.StudySpringBoot.service.interceptor.UnAuthenticationException;
+import com.icolor.StudySpringBoot.interceptor.UnAuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**

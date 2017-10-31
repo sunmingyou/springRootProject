@@ -1,7 +1,5 @@
 package com.icolor.StudySpringBoot.config;
 
-import com.icolor.StudySpringBoot.service.interceptor.AuthInterceptor;
-import com.icolor.StudySpringBoot.service.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.validation.MessageCodesResolver;
@@ -18,6 +16,7 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
+
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         super.configureDefaultServletHandling(configurer);
@@ -25,8 +24,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/user").excludePathPatterns("/login");
-        registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/user").excludePathPatterns("/login");
+     //   registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/user").excludePathPatterns("/login");
+     //   registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/user").excludePathPatterns("/login");
         super.addInterceptors(registry);
     }
 

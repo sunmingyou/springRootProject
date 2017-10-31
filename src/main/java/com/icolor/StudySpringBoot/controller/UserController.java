@@ -32,7 +32,9 @@ public class UserController {
     @GetMapping("/getall")
     @JsonView(user.UserSimpleView.class)
     public List<user> getAll(){
-       return userService.getUsers();
+
+        System.out.println(" controller info");
+        return userService.getUsers();
     }
 
     @GetMapping("/getone/{uid:\\d+}")
@@ -48,6 +50,7 @@ public class UserController {
 
     @PutMapping("/update")
     public void updateUser(@Valid @RequestBody user user, BindingResult errors){
+
         try {
             if(errors.hasErrors()){
                 errors.getAllErrors().forEach(error->{System.out.println(error.getDefaultMessage());});
