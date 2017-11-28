@@ -1,5 +1,7 @@
 package com.icolor.StudySpringBoot.config;
 
+import com.icolor.StudySpringBoot.interceptor.AuthInterceptor;
+import com.icolor.StudySpringBoot.interceptor.TimeInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.validation.MessageCodesResolver;
@@ -24,8 +26,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-     //   registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/user").excludePathPatterns("/login");
-     //   registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/user").excludePathPatterns("/login");
+       //registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/user").excludePathPatterns("/login");
+        registry.addInterceptor(new TimeInterceptor()).addPathPatterns("/user/*");
         super.addInterceptors(registry);
     }
 

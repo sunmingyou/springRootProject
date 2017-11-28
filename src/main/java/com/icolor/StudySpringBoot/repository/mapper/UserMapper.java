@@ -1,6 +1,7 @@
 package com.icolor.StudySpringBoot.repository.mapper;
 
 import com.icolor.StudySpringBoot.repository.domain.user;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -26,7 +27,7 @@ public interface UserMapper {
     @Update(value = "update users set name=#{name},email=#{email},mobile=#{mobile} where id=#{id}")
     public boolean updateUser(user user);
 
-    @Update(value = "delete from users where id=#{id}")
+    @Delete(value = "delete from users where id=#{id}")
     public boolean deleteUser(String id);
 
 }

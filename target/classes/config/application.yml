@@ -13,3 +13,7 @@ spring:
           force: true
           charset: UTF-8
           enabled: true
+icolor:
+    security:
+        login-page: /login/page
+      #  login-type: Redirect

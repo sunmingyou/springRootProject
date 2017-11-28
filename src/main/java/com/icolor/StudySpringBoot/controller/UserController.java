@@ -5,6 +5,7 @@ import com.icolor.StudySpringBoot.repository.domain.user;
 import com.icolor.StudySpringBoot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,12 +22,13 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @RequestMapping("")
-    public ModelAndView userManage(){
-        ModelAndView mv=new ModelAndView("UserList");
+    @GetMapping("")
+    public List<user> userManage(){
+        System.out.println("usermanage info");
+       // ModelAndView mv=new ModelAndView("UserList");
         List<user> users=userService.getUsers();
-        mv.addObject("users",users);
-        return mv;
+       // mv.addObject("users",users);
+        return users;
     }
 
     @GetMapping("/getall")

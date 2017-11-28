@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>标准登录页面</title>
+    <style type="text/css">
+        .login{width: 400px;height: 200px;}
+    </style>
 </head>
 <body>
-
+<h1>标准登录页面</h1>
+<form action="/authentication/form" method="post">
+    <table class="login">
+        <tr><td>用户名</td><td><input name="username" id="userName"/></td></tr>
+        <tr><td>密码</td><td><input name="password" id="password"/></td></tr>
+        <tr><td>图形验证码</td><td><input name="imageCode"/><img th:src="${imgUrl}"/></td></tr>
+        <tr><td colspan="2"><input type="submit" value="提交"/></td></tr>
+    </table>
+</form>
 </body>
 </html>

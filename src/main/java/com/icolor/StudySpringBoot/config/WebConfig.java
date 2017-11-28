@@ -20,7 +20,7 @@ public class WebConfig {
         TimeFilter timeFilter=new TimeFilter();
         filterRegistrationBean.setFilter(timeFilter);
         List<String> urls=new ArrayList<String>();
-        urls.add("/user");
+        urls.add("/user/*");
         filterRegistrationBean.setUrlPatterns(urls);
         return filterRegistrationBean;
     }

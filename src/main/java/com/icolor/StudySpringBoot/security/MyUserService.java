@@ -1,4 +1,4 @@
-package com.icolor.StudySpringBoot.service.security;
+package com.icolor.StudySpringBoot.security;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
