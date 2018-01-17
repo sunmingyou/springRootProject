@@ -4,6 +4,7 @@ server:
     uri-encoding: utf-8
 spring:
   datasource:
+    name: localMySql
     url: jdbc:mysql://127.0.0.1:3306/smytest?useUnicode=true&characterEncoding=utf8
     username: root
     password: 123456
@@ -17,3 +18,10 @@ icolor:
     security:
         login-page: /login/page
       #  login-type: Redirect
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.icolor.StudySpringBoot.repository.domain
+security:
+  basic:
+    enabled: false
+  enable-csrf: false

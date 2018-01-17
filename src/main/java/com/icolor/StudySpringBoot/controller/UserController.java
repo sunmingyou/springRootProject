@@ -5,11 +5,16 @@ import com.icolor.StudySpringBoot.repository.domain.user;
 import com.icolor.StudySpringBoot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -22,50 +27,45 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("")
-    public List<user> userManage(){
+    @GetMapping("/all")
+    public ModelAndView userManage(){
         System.out.println("usermanage info");
-       // ModelAndView mv=new ModelAndView("UserList");
-        List<user> users=userService.getUsers();
-       // mv.addObject("users",users);
-        return users;
+        ModelAndView mv=new ModelAndView("UserList");
+       List<user> users=userService.getUsers();
+     /*  user u=userService.getOne("1");*/
+        mv.addObject("users",users);
+        return mv;
     }
 
     @GetMapping("/getall")
     @JsonView(user.UserSimpleView.class)
     public List<user> getAll(){
-
-        System.out.println(" controller info");
         return userService.getUsers();
+
     }
 
-    @GetMapping("/getone/{uid:\\d+}")
-    @JsonView(user.UserDetailView.class)
+    @GetMapping("/getOne/{uid}")
     public user getOne(@PathVariable String uid){
        return userService.getOne(uid);
     }
 
-    @PostMapping("/create")
-    public void createUser(user user){
-            userService.createUser(user);
+    @PostMapping(value = "/create")
+    public boolean createUser(@ModelAttribute user myuser){
+         return userService.createUser(myuser);
     }
 
-    @PutMapping("/update")
-    public void updateUser(@Valid @RequestBody user user, BindingResult errors){
+    @PostMapping("/update")
+    public void updateUser(@RequestBody user user){
 
         try {
-            if(errors.hasErrors()){
-                errors.getAllErrors().forEach(error->{System.out.println(error.getDefaultMessage());});
-                return;
-            }
             userService.updateUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch (Exception e){
 
-        }
     }
 
-    @DeleteMapping("/del")
+    @PostMapping("/del")
     public void deleteUser(String id){
         try {
             userService.deleteUser(id);

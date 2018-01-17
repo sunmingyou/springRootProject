@@ -14,7 +14,7 @@
     <groupId>com.icolor.study</groupId>
     <artifactId>StudySpringbooot</artifactId>
     <version>1.0</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>1.8</java.version>
@@ -37,6 +37,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
+
             </dependency>
         <!--sprig boot开发辅助工具，支持热部署-->
         <dependency>
@@ -67,17 +68,22 @@
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <version>1.8.10</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-        <!--<dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session</artifactId>
-        </dependency>-->
+        <!--mappingJsonToHttpmessage-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.5.3</version>
+        </dependency>
+        <!--  <dependency>
+              <groupId>org.springframework.session</groupId>
+              <artifactId>spring-session</artifactId>
+          </dependency>-->
     </dependencies>
 
     <build>

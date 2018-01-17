@@ -1,12 +1,14 @@
 package com.icolor.StudySpringBoot.service;
 
 import com.icolor.StudySpringBoot.repository.domain.user;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
  * Created by admin on 2017/9/5.
  */
+
 public interface UserService {
     public List<user> getUsers();
     public user getOne(String id);

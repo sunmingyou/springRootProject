@@ -3,6 +3,9 @@ package com.icolor.StudySpringBoot.service.impl;
 import com.icolor.StudySpringBoot.repository.domain.user;
 import com.icolor.StudySpringBoot.repository.mapper.UserMapper;
 import com.icolor.StudySpringBoot.service.UserService;
+import groovy.util.logging.Log4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +16,21 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
+    Logger log= LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     UserMapper userMapper;
 
     @Override
     public List<user> getUsers(){
-       return userMapper.getUsers();
+        try {
+            return userMapper.getUsers();
+        } catch (Exception e) {
+            log.error("eror:"+e.getMessage());
+           e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -28,18 +40,36 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean createUser(user user) {
-        return userMapper.createUser(user);
+        try {
+             userMapper.createUser(user);
+            return  true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("添加用户失败:"+e.getMessage());
+            return false;
+        }
     }
 
     @Override
     public boolean updateUser(user user) throws Exception {
-        userMapper.updateUser(user);
-        throw new Exception("aa");
+        try {
+            userMapper.updateUser(user);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public boolean deleteUser(String id) throws Exception {
-        return userMapper.deleteUser(id);
+        try {
+             userMapper.deleteUser(id);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

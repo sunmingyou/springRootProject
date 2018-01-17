@@ -33,7 +33,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        ValidateCodeFilter validateCodeFilter=new ValidateCodeFilter();
+      /*  ValidateCodeFilter validateCodeFilter=new ValidateCodeFilter();
         validateCodeFilter.setAuthenticationFailureHandler(failureHandler);
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
@@ -43,11 +43,12 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(failureHandler)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login/page","/login/require","/code/*").permitAll()//例外的url
+                .antMatchers("/login/page","/login/require","/code*//*","/user*//*").permitAll()//例外的url
                 .anyRequest()
                 .authenticated()
                 .and()
-                .csrf().disable();//禁用csrf
-        super.configure(http);
+                .csrf().disable()*/;//禁用csrf
+       // super.configure(http);
+        http.csrf().disable();
     }
 }

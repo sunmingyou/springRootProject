@@ -2,108 +2,178 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>开始学习spring boot</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script src="http://cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>
     <script src="/js/layer/layer.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/UserList.css"/>
 </head>
 <body>
-   <div class="tit"><h2>用户管理</h2></div>
-   <form id="form1">
-        <table class="addbox">
-            <tr><td>姓名</td><td><input type="text" name="name"/></td></tr>
-            <tr><td>电子邮箱</td><td><input type="text" name="email"/></td></tr>
-            <tr><td>电话</td><td><input type="text" name="mobile"/></td></tr>
-            <tr><td colspan="2" class="mid"><button id="btnAdd">添加</button> </td></tr>
+<div class="tit"><h2>用户管理</h2></div>
+<form id="form1">
+    <table class="addbox">
+        <tr>
+            <td>姓名</td>
+            <td><input type="text" name="name"/></td>
+        </tr>
+        <tr>
+            <td>电子邮箱</td>
+            <td><input type="text" name="email"/></td>
+        </tr>
+        <tr>
+            <td>电话</td>
+            <td><input type="text" name="mobile"/></td>
+        </tr>
+        <tr>
+            <td colspan="2" class="mid">
+                <button id="btnAdd">添加</button>
+            </td>
+        </tr>
 
-        </table>
-   </form>
-   <br/>
+    </table>
+    <!--  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+</form>
+<br/>
 <table class="UserList">
-    <tr class="tit"><td>ID</td><td>姓名</td><td>电子邮箱</td><td>电话</td><td></td></tr>
+    <tr class="tit">
+        <td>ID</td>
+        <td>姓名</td>
+        <td>电子邮箱</td>
+        <td>电话</td>
+        <td></td>
+    </tr>
     <tr th:each="user:${users}">
         <td th:text="${user.id}"></td>
         <td th:text="${user.name}"></td>
         <td th:text="${user.email}"></td>
         <td th:text="${user.mobile}"></td>
-        <td><a th:id="${user.id}" class="del">删除</a>&nbsp;<a th:id="${user.id}" class="edit">修改</a> </td>
+        <td><a th:id="${user.id}" class="del">删除</a>&nbsp;<a th:id="${user.id}" class="edit">修改</a></td>
     </tr>
 
 </table>
 
-   <div class="editBox">
-           <form id="form2">
-               <table>
-                   <tr><td>姓名</td><td><input type="text" name="name"/></td></tr>
-                   <tr><td>电子邮箱</td><td><input type="text" name="email"/></td></tr>
-                   <tr><td>电话</td><td><input type="text" name="mobile"/></td></tr>
-                   <tr><td colspan="2" class="mid"><button id="btnUpdate" uid="">更新</button> </td></tr>
+<div class="editBox">
 
-               </table>
-           </form>
-   </div>
+    <table>
+        <form id="form2">
+            <tr>
+                <td>姓名</td>
+                <td>
+                    <input type="hidden" name="id"/>
+                    <input type="text" name="name"/></td>
+            </tr>
+            <tr>
+                <td>电子邮箱</td>
+                <td><input type="text" name="email"/></td>
+            </tr>
+            <tr>
+                <td>电话</td>
+                <td><input type="text" name="mobile"/></td>
+            </tr>
+        </form>
+        <tr>
+            <td colspan="2" class="mid">
+                <button id="btnUpdate" uid="">更新</button>
+            </td>
+        </tr>
+    </table>
+    <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />`-->
+
+
+</div>
 <script>
     $(function () {
         //添加
         $("#form1").submit(function () {
+            odata=$('#form1').serialize();
+            alert(odata)
             jQuery.ajax({
-                url:'/user/create',
-                data:$('#form1').serialize(),
-                type:"POST",
-                beforeSend:function()
-                {
+                url: '/user/create',
+                data: odata,
+                type: "POST",
+                contentType:"text",
+                beforeSend: function () {
                 },
-                success:function()
-                {
-                    alert("添加成功");
-                    window.location.reload();
+                success: function (ret) {
+                    if (ret) {
+                        alert("添加成功");
+                        window.location.reload();
+                    }
+                    else {
+                        alert("添加失败");
+                    }
                 }
             });
             return false;
         });
         //删除
-        $(".UserList a.del").on("click",function (e) {
+        $(".UserList a.del").on("click", function (e) {
+            var cid = $(this).attr("id");
             $.ajax({
-                url:'/user/del',
-                data:'id='+$(this).attr("id"),
-                type:"post",
-                success:function (data) {
+                url: '/user/del',
+                type: "post",
+                data: {id: cid},
+                success: function (data) {
                     alert("删除成功");
                     window.location.reload();
                 },
-                error:function () {
-
+                error: function (e) {
+                    console.log(e.message)
                 }
             })
         })
         //修改
-        $(".UserList a.edit").on("click",function (e) {
+        $(".UserList a.edit").on("click", function (e) {
             //获取数据
             $.ajax({
-                url:"/user/getOne",
-                data:"id="+$(this).attr("id"),
-                type:"post",
-                success:function (data) {
+                url: "/user/getOne/" + $(this).attr("id"),
+                type: "get",
+                success: function (data) {
                     $(".editBox input[name='name']").val(data.name);
                     $(".editBox input[name='email']").val(data.email);
-                    $(".editBox input[name='mobile']").val(data.email);
+                    $(".editBox input[name='mobile']").val(data.mobile);
+                    $(".editBox input[name='id']").val(data.id);
+                    layer.open({
+                        type: 1,
+                        shade: false,
+                        title: false, //不显示标题
+                        content: $('.editBox'), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+                        cancel: function () {
+                            //layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', {time: 5000, icon:6});
+                        }
+                    });
+
                 },
-                error:function () {
+                error: function () {
 
                 }
             })
-            layer.open({
-                type: 1,
-                shade: false,
-                title: false, //不显示标题
-                content: $('.editBox'), //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
-                cancel: function(){
-                    //layer.msg('捕获就是从页面已经存在的元素上，包裹layer的结构', {time: 5000, icon:6});
-                }
-            });
         })
+
+        // 更新
+        $("#btnUpdate").on("click", function (e) {
+            e.stopPropagation();
+            odata = {
+                name: $(".editBox input[name='name']").val(), mobile: $(".editBox input[name='mobile']").val(),
+                email: $(".editBox input[name='email']").val(),
+                id:$(".editBox input[name='id']").val()
+            };
+            $.ajax({
+                url: "/user/update",
+                type: "post",
+                contentType: "application/json",
+                data:JSON.stringify(odata),
+                success: function (ret) {
+                    alert("更新成功");
+                    location.reload();
+                },
+                error: function (e) {
+
+                }
+            })
+        })
+
     })
-    
+
 </script>
 </body>
 

@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -40,7 +41,7 @@ public class UserControllerTest {
 
     @Test
     public void testGetOne() throws  Exception{
-        MvcResult result= mvc.perform(MockMvcRequestBuilders.get("/user/getone/2").accept(MediaType.APPLICATION_JSON)).andReturn();
+        MvcResult result= mvc.perform(MockMvcRequestBuilders.get("/user/all").accept(MediaType.APPLICATION_JSON)).andReturn();
        System.out.print(result.getResponse().getContentAsString());
     }
 
